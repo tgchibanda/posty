@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index(){
 
         //dd(auth()->user()); check if the user is signed in 
-        dd(auth()->user()->posts); // not calling the posts() function because we do not want to return the relatioship but the collection
+        //dd(auth()->user()->posts); // not calling the posts() function because we do not want to return the relatioship but the collection
         return view('dashboard');
     }
 }
