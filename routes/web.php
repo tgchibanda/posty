@@ -44,6 +44,7 @@ Route::post('/logon',[LogonController::class, 'getIn']);
 
 
 Route::get('/posts',[GetpostsController::class, 'index'])->name('getposts');
+Route::post('/posts',[GetpostsController::class, 'store']);
 /*
 Route::get('/posts', function () {
     return view('posts.home');
