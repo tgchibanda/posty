@@ -9,7 +9,9 @@ class GetpostsController extends Controller
 {
     public function index(){
 
-        $posts = Post::get(); // collection of posts
+        //$posts = Post::get(); // collection of posts could be a million
+        $posts = Post::simplePaginate(2);
+
         //dd($posts);
 
         return view('posts.posts', [

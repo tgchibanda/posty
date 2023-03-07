@@ -43,6 +43,8 @@
         <th>Post</th>
         <th>User</th>
         <th>Date</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -54,8 +56,27 @@
         <td>{{$post->user->name}}</td>
         <td>{{$post->body}}</td>
         <td>{{$post->created_at->diffForHumans()}}</td>
+        <td>
+            
+            <form action="" method="post">
+            @csrf
+                <button type="submit" class="btn btn-block btn-link btn-sm"> <i class="fa fa-thumbs-up"></i> Like</button>
+            </form>
+       
+           
+            <form action="" method="post">
+            @csrf
+                <button type="submit" class="btn btn-block btn-link btn-sm">UnLike </button>
+            </form>
+            {{ $post->malike->count() }} {{ Str::plural('like', $post->malike->count()) }}
+           
+        
+        </td>
       </tr>
    @endforeach
+   <tr><td colspan="5" align="center">{{$posts-> links() }}</td></tr>
+   
+   
 
                     @else<p> There are no posts!</p>
 
