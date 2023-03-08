@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\GetoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeindexController;
 use App\Http\Controllers\GetpostsController;
+use App\Http\Controllers\PostLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::post('/logon',[LogonController::class, 'getIn']);
 
 Route::get('/posts',[GetpostsController::class, 'index'])->name('getposts');
 Route::post('/posts',[GetpostsController::class, 'store']);
+
+// with this route id you will have to do a post find with id in the controller Route::post('/posts/{id}',[PostLikeController::class, 'store'])->name('postslike');
+Route::post('/posts/likes/{post}',[PostLikeController::class, 'store'])->name('postslike'); //use the name of the model instead
+Route::delete('/posts/likes/{post}',[PostLikeController::class, 'bvisaLike'])->name('postslike');
 /*
 Route::get('/posts', function () {
     return view('posts.home');

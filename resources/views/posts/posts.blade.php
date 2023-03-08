@@ -36,15 +36,12 @@
                     </form>
 
                     @if ($posts->count())
-                    <hr>
-                    <table class="table table-striped">
+                    
+                    <table class="table table-borderless" width="100%">
     <thead>
       <tr>
-        <th>Post</th>
-        <th>User</th>
-        <th>Date</th>
-        <th></th>
-        <th></th>
+      <th></th>
+      <th></th>
       </tr>
     </thead>
     <tbody>
@@ -52,32 +49,41 @@
 
                         
     
-      <tr>
-        <td>{{$post->user->name}}</td>
-        <td>{{$post->body}}</td>
-        <td>{{$post->created_at->diffForHumans()}}</td>
-        <td>
-            
-            <form action="" method="post">
-            @csrf
-                <button type="submit" class="btn btn-block btn-link btn-sm"> <i class="fa fa-thumbs-up"></i> Like</button>
-            </form>
-       
-           
-            <form action="" method="post">
-            @csrf
-                <button type="submit" class="btn btn-block btn-link btn-sm">UnLike </button>
-            </form>
-            {{ $post->malike->count() }} {{ Str::plural('like', $post->malike->count()) }}
-           
-        
-        </td>
-      </tr>
-   @endforeach
-   <tr><td colspan="5" align="center">{{$posts-> links() }}</td></tr>
-   
-   
+      <tr><td colspan="2"><h3>{{$post->user->name}}</h3></td></tr>
+        <tr><td colspan="2">{{$post->body}}</td></tr>
+        <tr><td colspan="2">{{$post->created_at->diffForHumans()}}</td></tr>
 
+        
+        <tr>
+        <td>
+
+       
+        @auth 
+@if(!$post->likedBy(auth()->user()))
+    <form action="{{ route('postslike', $post->id) }}" method="post">
+    @csrf
+        <button type="submit" class="btn btn-block btn-link btn-sm float-left"> <i class="fa fa-thumbs-up"></i> Like</button>
+    </form>
+   @else
+    <form action="{{ route('postslike', $post->id) }}" method="post">
+    @csrf
+    @method('DELETE')
+        <button type="submit" class="btn btn-block btn-link btn-sm float-left">UnLike </button>
+    </form>
+    @endif
+    @endauth
+        </td>
+        <td>
+    {{ $post->malike->count() }} {{ Str::plural('like', $post->malike->count()) }}
+   
+    </td></tr>
+
+   @endforeach
+        
+<tr><td colspan="2"></td></tr>
+
+
+<tr><td colspan="2"> {{$posts-> links() }}</td></tr>
                     @else<p> There are no posts!</p>
 
                     </tbody>

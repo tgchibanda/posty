@@ -10,7 +10,8 @@ class GetpostsController extends Controller
     public function index(){
 
         //$posts = Post::get(); // collection of posts could be a million
-        $posts = Post::simplePaginate(2);
+        $posts = Post::with(['user', 'maLike'])->simplePaginate(4); //we are egger loading the queries to reduce weight on requests
+       //$posts = Post::simplePaginate(4);
 
         //dd($posts);
 
