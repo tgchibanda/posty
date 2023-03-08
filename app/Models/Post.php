@@ -14,9 +14,15 @@ class Post extends Model
         'user_id',
     ];
 
-    public function likedBy(User $user){
-        return $this->malike->contains('user_id', $user->id);  // returns true or false
+    public function postBelongsTo(User $user){
+          // returns true or
+        return $user->id === $this->user_id;
     }
+
+    public function likedBy(User $user){
+        return $this->malike->contains('user_id', $user->id);  // returns true or
+    }
+
      //eloquent relationship function ie post has a user 
      public function user(){
         return $this->belongsTo(User::class);

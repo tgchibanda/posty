@@ -1,41 +1,7 @@
 @extends('layouts.index')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Posts') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('getposts') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                        
-                            <div class="col-md-6 offset-md-3">
-                                <textarea placeholder="Say something!" class="form-control @error('post') is-invalid @enderror" value="{{ old('post') }}" autofocus name="post" rows="5" id="post" name="post"></textarea>
-
-                                @error('post')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                       
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-5">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Post') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                    @if ($posts->count())
+@if ($posts->count())
                     
                     <table class="table table-borderless" width="100%">
     <thead>
@@ -45,11 +11,13 @@
       </tr>
     </thead>
     <tbody>
+
+    <tr><td colspan="2"><h3>{{$user->name}} posted {{ $posts->count() }} {{ Str::plural('post', $posts->count()) }} and received {{$user->receivedLikes->count()}} {{ Str::plural('like', $user->receivedLikes->count()) }}</h3></td></tr>
                         @foreach ($posts as $post)
 
                         
     
-      <tr><td colspan="2"><h3><a href="{{ route('userposts', $post->user)}}">{{$post->user->name}}</a></h3></td></tr>
+      
         <tr><td colspan="2">{{$post->body}}</td></tr>
         <tr><td colspan="2">{{$post->created_at->diffForHumans()}}</td></tr>
 
@@ -102,9 +70,6 @@
                     </tbody>
   </table>
                     @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 @endsection

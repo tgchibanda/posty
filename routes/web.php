@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegistrationController;
-use App\Http\Controllers\Auth\LogonController;
-use App\Http\Controllers\Auth\GetoutController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeindexController;
 use App\Http\Controllers\GetpostsController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\UserPostController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeindexController;
+use App\Http\Controllers\Auth\LogonController;
+use App\Http\Controllers\PostDeleteController;
+use App\Http\Controllers\Auth\GetoutController;
+use App\Http\Controllers\Auth\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,12 +46,14 @@ Route::get('/logon',[LogonController::class, 'index'])->name('logon');
 Route::post('/logon',[LogonController::class, 'getIn']);
 
 
+Route::get('/userposts/{user:name}',[UserPostController::class, 'index'])->name('userposts');
 Route::get('/posts',[GetpostsController::class, 'index'])->name('getposts');
 Route::post('/posts',[GetpostsController::class, 'store']);
 
 // with this route id you will have to do a post find with id in the controller Route::post('/posts/{id}',[PostLikeController::class, 'store'])->name('postslike');
 Route::post('/posts/likes/{post}',[PostLikeController::class, 'store'])->name('postslike'); //use the name of the model instead
 Route::delete('/posts/likes/{post}',[PostLikeController::class, 'bvisaLike'])->name('postslike');
+Route::delete('/posts/takeout/{post}',[PostDeleteController::class, 'bvisaPost'])->name('postdelete');
 /*
 Route::get('/posts', function () {
     return view('posts.home');
