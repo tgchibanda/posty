@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\PostLiked;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostLikeController extends Controller
 {
@@ -21,11 +23,17 @@ class PostLikeController extends Controller
                 //if true
                 return response(null, 409);
         }
-        else {
+        
             $post->malike()->create([
                 'user_id' => $request->user()->id,
             ]);
-        }
+
+            //the check below will prevent emails being sent as a spam
+            if(!$post->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count()){
+                Mail::to($post->user)->send(new PostLiked(auth()->user(), $post));
+            }
+            
+        
         return back();
     }
 

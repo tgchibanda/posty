@@ -46,6 +46,7 @@ Route::get('/logon',[LogonController::class, 'index'])->name('logon');
 Route::post('/logon',[LogonController::class, 'getIn']);
 
 
+Route::get('/one/{post:id}',[GetpostsController::class, 'show'])->name('userOnePost');
 Route::get('/userposts/{user:name}',[UserPostController::class, 'index'])->name('userposts');
 Route::get('/posts',[GetpostsController::class, 'index'])->name('getposts');
 Route::post('/posts',[GetpostsController::class, 'store']);

@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     //eloquent relationship function ie user has many posts
     public function posts(){
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class); // select * from posts where user_id = the modeluserid // hasMany will pick the current model ie User and gets its primary key ie id and puts it in the sql
     }
 
     //eloquent relationship function ie user has many likes

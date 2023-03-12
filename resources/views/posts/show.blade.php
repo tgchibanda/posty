@@ -11,24 +11,18 @@
       </tr>
     </thead>
     <tbody>
-
-    <tr><td colspan="2"><h3>{{$user->name}} posted {{ $posts->count() }} {{ Str::plural('post', $posts->count()) }} and received {{$user->receivedLikes->count()}} {{ Str::plural('like', $user->receivedLikes->count()) }}</h3></td></tr>
-                        @foreach ($posts as $post)
+                        
 
                         
     
       
-        <tr><td colspan="2">{{$post->body}}</td></tr>
-        <tr><td colspan="2">{{$post->created_at->diffForHumans()}}</td></tr>
+    <tr><td colspan="2">{{ $posts->user->name }}</td></tr>
+    <tr><td colspan="2">{{ $posts->body }}</td></tr>
+        <tr><td colspan="2">{{$posts->created_at->diffForHumans()}}</td></tr>
 
-
-
-        @auth 
-
-
-        @if($post->postBelongsTo(auth()->user()))
+        @if($posts->postBelongsTo(auth()->user()))
         <tr><td colspan="2">
-<form action="{{ route('postdelete', $post->id) }}" method="post">
+<form action="{{ route('postdelete', $posts->id) }}" method="post">
 @csrf
 @method('DELETE')
 <button type="submit" class="btn btn-block btn-link btn-sm float-left"> <i class="fa fa-thumbs-up"></i> Delete</button>
@@ -41,37 +35,36 @@
         <td>
 
        
-     
+        @auth 
 
         
 
-@if(!$post->likedBy(auth()->user()))
-    <form action="{{ route('postslike', $post->id) }}" method="post">
+@if(!$posts->likedBy(auth()->user()))
+    <form action="{{ route('postslike', $posts->id) }}" method="post">
     @csrf
         <button type="submit" class="btn btn-block btn-link btn-sm float-left"> <i class="fa fa-thumbs-up"></i> Like</button>
     </form>
    @else
-    <form action="{{ route('postslike', $post->id) }}" method="post">
+    <form action="{{ route('postslike', $posts->id) }}" method="post">
     @csrf
     @method('DELETE')
         <button type="submit" class="btn btn-block btn-link btn-sm float-left">UnLike </button>
     </form>
     @endif
     @endauth
-
-    
         </td>
         <td>
-    {{ $post->malike->count() }} {{ Str::plural('like', $post->malike->count()) }}
+        <td>
+    {{ $posts->malike->count() }} {{ Str::plural('like', $posts->malike->count()) }}
    
+    </td>
     </td></tr>
 
-   @endforeach
+ 
         
 <tr><td colspan="2"></td></tr>
 
 
-<tr><td colspan="2"> {{$posts-> links() }}</td></tr>
                     @else<p> There are no posts!</p>
 
                     </tbody>
