@@ -33,12 +33,16 @@
         <li class="nav-item">
           <a class="nav-link" href="#">{{auth()->user()->name}}</a>
         </li>
+
+        
         <li class="nav-item">
           <form action="{{ route('getout') }}" method="post" class="inline">
             @csrf
             <button class="nav-link btn btn-link">Logout</button> 
           </form>
         </li>
+        
+
         @else
         <li class="nav-item">
           <a class="nav-link" href="{{ route('homeindex') }}">Home</a>
